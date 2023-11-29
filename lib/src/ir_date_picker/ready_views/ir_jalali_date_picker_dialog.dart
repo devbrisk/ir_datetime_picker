@@ -9,20 +9,22 @@ import 'package:shamsi_date/shamsi_date.dart';
 
 class IRJalaliDatePickerResponsiveDialog extends StatelessWidget {
   final Jalali? initialDate;
-  final int? minYear;
-  final int? maxYear;
+  final Jalali? startDate;
+  final Jalali? endDate;
   final String title;
   final bool visibleTodayButton;
+  final bool visibleDays;
   final String todayButtonText;
   final String confirmButtonText;
 
   const IRJalaliDatePickerResponsiveDialog({
     super.key,
     this.initialDate,
-    this.minYear,
-    this.maxYear,
+    this.startDate,
+    this.endDate,
     required this.title,
     this.visibleTodayButton = true,
+    this.visibleDays = true,
     required this.todayButtonText,
     required this.confirmButtonText,
   });
@@ -40,14 +42,17 @@ class IRJalaliDatePickerResponsiveDialog extends StatelessWidget {
     );
     Widget titleText = Text(
       title,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontSize: 22.0.responsiveFont(context), fontWeight: FontWeight.w700),
+      style: Theme.of(context)
+          .textTheme
+          .titleLarge
+          ?.copyWith(fontSize: 22.0.responsiveFont(context), fontWeight: FontWeight.w700),
     );
     Widget datePicker = IRJalaliDatePicker(
       initialDate: initialDate,
-      minYear: minYear,
-      maxYear: maxYear,
+      startDate: startDate,
+      endDate: endDate,
       visibleTodayButton: visibleTodayButton,
+      visibleDays: visibleDays,
       todayButtonText: todayButtonText,
       onSelected: (Jalali jalaliDate) {
         selectedDate = jalaliDate;
@@ -55,15 +60,13 @@ class IRJalaliDatePickerResponsiveDialog extends StatelessWidget {
     );
     Widget confirmButton = ConstrainedBox(
       constraints: BoxConstraints.tightFor(
-          width: 50.0.percentOfWidth(context),
-          height: 6.0.percentOfHeight(context)),
+          width: 50.0.percentOfWidth(context), height: 6.0.percentOfHeight(context)),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: themeData.primaryColor,
           elevation: 6.0,
           shadowColor: Colors.black38,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         ),
         child: Text(
           confirmButtonText,
@@ -116,10 +119,11 @@ class IRJalaliDatePickerResponsiveDialog extends StatelessWidget {
 Future<Jalali?> showIRJalaliDatePickerDialog(
     {required BuildContext context,
     Jalali? initialDate,
-    int? minYear,
-    int? maxYear,
+    Jalali? startDate,
+    Jalali? endDate,
     required String title,
     bool visibleTodayButton = true,
+    bool visibleDays = true,
     required String todayButtonText,
     required String confirmButtonText}) async {
   Jalali? jalaliDate = await showDialog<Jalali?>(
@@ -129,10 +133,11 @@ Future<Jalali?> showIRJalaliDatePickerDialog(
       body: Center(
         child: IRJalaliDatePickerResponsiveDialog(
           initialDate: initialDate,
-          minYear: minYear,
-          maxYear: maxYear,
+          startDate: startDate,
+          endDate: endDate,
           title: title,
           visibleTodayButton: visibleTodayButton,
+          visibleDays: visibleDays,
           todayButtonText: todayButtonText,
           confirmButtonText: confirmButtonText,
         ),

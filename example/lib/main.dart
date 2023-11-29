@@ -47,8 +47,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("تاریخ جلالی: $_jalaliDate",
-                style: const TextStyle(fontSize: 18.0)),
+            Text("تاریخ جلالی: $_jalaliDate", style: const TextStyle(fontSize: 18.0)),
             const SizedBox(height: 5.0),
 
             // Simple jalali date picker using top level functions showIRJalaliDatePickerDialog or showIRJalaliDatePickerRoute:
@@ -60,22 +59,21 @@ class _HomePageState extends State<HomePage> {
                   context: context,
                   title: "انتخاب تاریخ",
                   visibleTodayButton: true,
+                  visibleDays: false,
                   todayButtonText: "انتخاب امروز",
                   confirmButtonText: "تایید",
                   initialDate: Jalali(1400, 4, 2),
                 );
                 if (selectedDate != null) {
                   setState(() {
-                    _jalaliDate =
-                        "${selectedDate.year}/${selectedDate.month}/${selectedDate.day}";
+                    _jalaliDate = "${selectedDate.year}/${selectedDate.month}/${selectedDate.day}";
                   });
                 }
               },
             ),
             const SizedBox(height: 30.0),
 
-            Text("تاریخ میلادی: $_gregorianDate",
-                style: const TextStyle(fontSize: 18.0)),
+            Text("تاریخ میلادی: $_gregorianDate", style: const TextStyle(fontSize: 18.0)),
             const SizedBox(height: 5.0),
 
             // Simple gregorian date picker using top level functions showIRGregorianDatePickerDialog or showIRGregorianDatePickerRoute:
@@ -130,13 +128,13 @@ class _HomePageState extends State<HomePage> {
             Container(
               color: Colors.green.withOpacity(0.1),
               child: IRJalaliDatePicker(
-                initialDate: Jalali(1400, 1, 3),
-                minYear: 1390,
-                maxYear: 1420,
+                initialDate: Jalali(1400, 3, 3),
+                startDate: Jalali(1400, 3, 3),
+                endDate: Jalali(1403, 6, 21),
                 visibleTodayButton: true,
+                visibleDays: true,
                 todayButtonText: "انتخاب اکنون",
-                constraints:
-                    const BoxConstraints.tightFor(width: 400, height: 200),
+                constraints: const BoxConstraints.tightFor(width: 400, height: 200),
                 onSelected: (Jalali date) {
                   if (kDebugMode) {
                     print(date.toString());

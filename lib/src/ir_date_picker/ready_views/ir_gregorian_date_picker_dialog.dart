@@ -9,20 +9,22 @@ import 'package:shamsi_date/shamsi_date.dart';
 
 class IRGregorianDatePickerResponsiveDialog extends StatelessWidget {
   final Gregorian? initialDate;
-  final int? minYear;
-  final int? maxYear;
+  final Gregorian? startDate;
+  final Gregorian? endDate;
   final String title;
   final bool visibleTodayButton;
+  final bool visibleDays;
   final String todayButtonText;
   final String confirmButtonText;
 
   const IRGregorianDatePickerResponsiveDialog({
     super.key,
     this.initialDate,
-    this.minYear,
-    this.maxYear,
+    this.startDate,
+    this.endDate,
     required this.title,
     this.visibleTodayButton = true,
+    this.visibleDays = true,
     required this.todayButtonText,
     required this.confirmButtonText,
   });
@@ -40,14 +42,17 @@ class IRGregorianDatePickerResponsiveDialog extends StatelessWidget {
     );
     Widget titleText = Text(
       title,
-      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontSize: 22.0.responsiveFont(context), fontWeight: FontWeight.w700),
+      style: Theme.of(context)
+          .textTheme
+          .titleLarge
+          ?.copyWith(fontSize: 22.0.responsiveFont(context), fontWeight: FontWeight.w700),
     );
     Widget datePicker = IRGregorianDatePicker(
       initialDate: initialDate,
-      minYear: minYear,
-      maxYear: maxYear,
+      startDate: startDate,
+      endDate: endDate,
       visibleTodayButton: visibleTodayButton,
+      visibleDays: visibleDays,
       todayButtonText: todayButtonText,
       onSelected: (Gregorian gregorianDate) {
         selectedDate = gregorianDate;
@@ -55,15 +60,13 @@ class IRGregorianDatePickerResponsiveDialog extends StatelessWidget {
     );
     Widget confirmButton = ConstrainedBox(
       constraints: BoxConstraints.tightFor(
-          width: 50.0.percentOfWidth(context),
-          height: 6.0.percentOfHeight(context)),
+          width: 50.0.percentOfWidth(context), height: 6.0.percentOfHeight(context)),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: themeData.primaryColor,
           elevation: 6.0,
           shadowColor: Colors.black38,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         ),
         child: Text(
           confirmButtonText,
@@ -116,10 +119,11 @@ class IRGregorianDatePickerResponsiveDialog extends StatelessWidget {
 Future<Gregorian?> showIRGregorianDatePickerDialog(
     {required BuildContext context,
     Gregorian? initialDate,
-    int? minYear,
-    int? maxYear,
+    Gregorian? startDate,
+    Gregorian? endDate,
     required String title,
     bool visibleTodayButton = true,
+    bool visibleDays = true,
     required String todayButtonText,
     required String confirmButtonText}) async {
   Gregorian? gregorianDate = await showDialog<Gregorian?>(
@@ -129,10 +133,11 @@ Future<Gregorian?> showIRGregorianDatePickerDialog(
       body: Center(
         child: IRGregorianDatePickerResponsiveDialog(
           initialDate: initialDate,
-          minYear: minYear,
-          maxYear: maxYear,
+          startDate: startDate,
+          endDate: endDate,
           title: title,
           visibleTodayButton: visibleTodayButton,
+          visibleDays: visibleDays,
           todayButtonText: todayButtonText,
           confirmButtonText: confirmButtonText,
         ),
